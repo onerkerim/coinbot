@@ -1,0 +1,21 @@
+<!-- templates/registration/signup.html -->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div style="margin-top:100px;" class="d-flex justify-content-center align-items-center">
+      <div class="col-md-6">
+        <h2>Üye Ol</h2>
+        <form method="post" class="uniForm">
+          {% csrf_token %}
+          <!--{{ form.as_p }}-->
+
+          {{ form|crispy }}
+          <button type="submit" class="btn btn-primary mt-20 col-md-12">Üye Ol</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

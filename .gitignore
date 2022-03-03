@@ -1,0 +1,7 @@
+*.pyc
+*~
+__pycache__
+myvenv
+db.sqlite3_coinbot
+/static
+.DS_Store

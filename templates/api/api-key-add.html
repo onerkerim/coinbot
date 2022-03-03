@@ -1,0 +1,36 @@
+<!-- templates/api/api-add.html -->
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div style="margin-top:100px;" class="d-flex justify-content-center align-items-center">
+    <div class="col-md-5">
+      <a href="../../" class="btn btn-outline-secondary button-style-1"><i class="fa-solid fa-angle-left"></i></a>
+      <br>
+      <br>
+      <h2>Api Key Ekle</h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="requiredField">Api Key</label>
+          <div>
+            <input type="text" name="api_key" autofocus="" autocapitalize="none" class="textinput textInput form-control" required="">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="requiredField">Secret Key</label>
+          <div>
+            <input type="text" name="api_secret_key" autofocus="" autocapitalize="none" class="textinput textInput form-control" required="">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-20 col-md-12">Api Keyleri Kaydet</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

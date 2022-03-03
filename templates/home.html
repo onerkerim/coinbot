@@ -1,0 +1,81 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<!-- Image and text -->
+<nav class="navbar navbar-light bg-light">
+    {% if user.is_authenticated %}
+      <a class="navbar-brand" href="#">Hi {{ user.username }}</a>
+      <span class="navbar-text">
+        <a href="{% url 'logout' %}">Çıkış Yap</a>
+      </span>
+    {% endif %}
+</nav>
+{% if user.is_authenticated %}
+
+
+
+<div class="container" style="margin-top:100px;">
+  <div class="row">
+  <div class="col-sm-7">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{user_info}} Api Key Ekle</h5>
+        <p class="card-text">Binance api keyinizi ekleyerek bilgilerinize ulaşın</p>
+        <a href="accounts/api-key-add/" class="btn btn-primary">Api Key Ekle</a>
+
+        {% for post in api_key_lists %}
+           <hr>
+           <div class="card">
+             <div class="card-body">
+               <div>
+                <span class="api-key-label">Api Key: <br>{{ post.api_key }}</span>
+                <span class="api-key-label">Secret Key <br>{{ post.api_secret_key }}</span>
+                <!--<p>{{ post.api_secret_key|linebreaksbr }}</p>-->
+               </div>
+             </div>
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-5">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">%10 Kar İle Bot Kullanımına Başla</h5>
+        <p class="card-text">Sizin için belirlediğimiz stratijerden kar elde etmeye başla</p>
+        <a href="#" class="btn btn-primary">Botu Etkinleştir</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+{% else %}
+<div class="container">
+  <div class="row icon-boxes mt-20">
+        <div class="col-md-6 d-flex justify-content-center align-items-center col-lg-6 d-flex align-items-stretch mb-5 mb-lg-0 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="200">
+          <div class="icon-box">
+            <div class="icon"><i class="ri-stack-line"></i></div>
+            <h4 class="title"><a href="{% url 'login' %}">Giriş Yap</a></h4>
+
+          </div>
+        </div>
+
+        <div class="col-md-6 d-flex justify-content-center align-items-center col-lg-6 d-flex align-items-stretch mb-5 mb-lg-0 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="300">
+          <div class="icon-box">
+            <div class="icon"><i class="ri-palette-line"></i></div>
+            <h4 class="title"><a href="{% url 'signup' %}">Üye Ol</a></h4>
+
+          </div>
+        </div>
+
+
+
+      </div>
+</div>
+{% endif %}
+{% endblock %}
