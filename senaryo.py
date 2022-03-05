@@ -4,20 +4,43 @@ import talib as ta
 import math
 from binance.client import Client
 
-import smtplib, ssl
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+mail_content = "hello"
+#The mail addresses and password
+sender_address = 'pyhonmailgonder@gmail.com'
+sender_pass = '02120212Oner'
+receiver_address = 'onerkerim@me.com'
+#Setup the MIME
+message = MIMEMultipart()
+message['From'] = sender_address
+message['To'] = receiver_address
+message['Subject'] = 'A test mail sent by Python. It has an attachment.'   #The subject line
+#The body and the attachments for the mail
+message.attach(MIMEText(mail_content, 'plain'))
+#Create SMTP session for sending the mail
+session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
+session.starttls() #enable security
+session.login(sender_address, sender_pass) #login with mail_id and password
+text = message.as_string()
+session.sendmail(sender_address, receiver_address, text)
+session.quit()
+print('Mail Sent')
 
 
-def send_emails(title,msg):
-    server = smtplib.SMTP_SSL('smtp.yandex.com.tr:465')
-    server.ehlo()
-    server.starttls()
-    server.login('onerkerim1@yandex.com','02120212oNER!?')
-    message = 'Subject: {}\n\n{}'.format(title,msg)
-    server.sendmail(yandex_mail,send_to_email,message)
-    server.quit()
-    print('E-mails successfully sent!')
+#def send_emails(title,msg):
+#    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+#    server.ehlo()
+#    server.starttls()
+#    server.ehlo()
+#    server.login('pyhonmailgonder@gmail.com','02120212Oner')
+#    message = 'Subject: {}\n\n{}'.format(title,msg)
+#    server.sendmail('pyhonmailgonder@gmail.com','onerkerim@me.com',message)
+#    server.quit()
+#    print('E-mails successfully sent!')
 
-    send_emails('onerkerim@me.com', 'deneme')
+
 
 
 
@@ -35,6 +58,8 @@ ATR_FACTOR = 3
 closes = []
 highs = []
 lows = []
+
+
 
 #class BinanceConnection:
 #    def __init__(self, file):
