@@ -120,16 +120,16 @@ WSGI_APPLICATION = 'src.wsgi.application'
 #}
 
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'mydatabase',
-#        'USER': 'gbkinhdmtmchkv',
-#        'PASSWORD': 'a210ffae06bd8b55adacf91a8097e787a0d7df7b74ba087ba53311b2bb180006',
-#        'HOST': 'ec2-23-23-219-25.compute-1.amazonaws.com',
-#        'PORT': 5432,
-#    }
-#}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mydatabase',
+        'USER': 'gbkinhdmtmchkv',
+        'PASSWORD': 'a210ffae06bd8b55adacf91a8097e787a0d7df7b74ba087ba53311b2bb180006',
+        'HOST': 'ec2-23-23-219-25.compute-1.amazonaws.com',
+        'PORT': 5432,
+    }
+}
 #postgres://gbkinhdmtmchkv:a210ffae06bd8b55adacf91a8097e787a0d7df7b74ba087ba53311b2bb180006@ec2-23-23-219-25.compute-1.amazonaws.com:5432/d82mj821b20ib6
 
 # Password validation
