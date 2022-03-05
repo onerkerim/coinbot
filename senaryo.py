@@ -3,7 +3,24 @@ import numpy as np
 import talib as ta
 import math
 from binance.client import Client
-from django.core.mail import send_mail
+
+import smtplib, ssl
+
+
+def send_emails(title,msg):
+    server = smtplib.SMTP_SSL('smtp.yandex.com.tr:465')
+    server.ehlo()
+    server.starttls()
+    server.login('onerkerim1@yandex.com','02120212oNER!?')
+    message = 'Subject: {}\n\n{}'.format(title,msg)
+    server.sendmail(yandex_mail,send_to_email,message)
+    server.quit()
+    print('E-mails successfully sent!')
+
+    send_emails('onerkerim@me.com', 'deneme')
+
+
+
 
 
 
