@@ -12,7 +12,7 @@ from accounts.models import api_keys
 from django.views import generic
 from django.views.generic import TemplateView
 
-
+#from django.core.mail import send_mail
 
 
 
@@ -52,4 +52,15 @@ def ApiKeyAddView(request):
        )
        q.save()
        #return redirect(index)
+
+       #send_mail(
+        #'Mail başlığı',
+        #'Mail içeriği',
+        #'onerkerim1@yandex.com',
+        #['onerkerim@me.com'],
+        #fail_silently=False,
+        #)
+
+
+
     return render(request,'api/api-key-add.html',locals())

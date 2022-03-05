@@ -11,7 +11,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import os
+import os # bu alan sonradan eklendi whitenoise os yi bulamadığı için derleyemiyordu
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -73,6 +73,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    #bu alan sonradan eklendi bu STATIC_ROOT un aktif olmasında yardımcı bunu ekledikten sonra whitenoise pip instal yapmak gerekmekte ve
+    # whitenoise instal yapıldıktan sonra heroku run python manage.py collectstatic  koduyla static dizini tanıtılmalıdır
 ]
 
 ROOT_URLCONF = 'src.urls'
@@ -178,8 +180,8 @@ EMAIL_HOST = 'smtp.yandex.com'
 EMAIL_HOST_USER = 'onerkerim1@yandex.com'
 EMAIL_HOST_PASSWORD = '02120212oNER!?'
 EMAIL_PORT = 587
-
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+#EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
 
 
