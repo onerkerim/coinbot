@@ -7,26 +7,8 @@ from binance.client import Client
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-mail_content = "hello"
-#The mail addresses and password
-sender_address = 'pyhonmailgonder@gmail.com'
-sender_pass = '02120212Oner'
-receiver_address = 'onerkerim@me.com'
-#Setup the MIME
-message = MIMEMultipart()
-message['From'] = sender_address
-message['To'] = receiver_address
-message['Subject'] = 'A test mail sent by Python. It has an attachment.'   #The subject line
-#The body and the attachments for the mail
-message.attach(MIMEText(mail_content, 'plain'))
-#Create SMTP session for sending the mail
-session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
-session.starttls() #enable security
-session.login(sender_address, sender_pass) #login with mail_id and password
-text = message.as_string()
-session.sendmail(sender_address, receiver_address, text)
-session.quit()
-print('Mail Sent')
+
+
 
 
 #def send_emails(title,msg):
@@ -77,13 +59,6 @@ lows = []
 
 def on_open(ws):
     print('opened connection')
-    send_mail(
-   'Mail başlığı',
-   'Mail içeriği',
-   'onerkerim1@yandex.com',
-   ['onerkerim@me.com'],
-   fail_silently=False,
-   )
 
 def on_close(ws):
     print('closed connection')
@@ -201,6 +176,27 @@ def on_message(ws, message):
         high = float(candle['h'])
         low = float(candle['l'])
         print('close', close, 'high', high, 'low', low, 'kapanış sıra ', closes)
+
+        mail_content = "hello"
+        #The mail addresses and password
+        sender_address = 'pyhonmailgonder@gmail.com'
+        sender_pass = '02120212Oner'
+        receiver_address = 'onerkerim@me.com'
+        #Setup the MIME
+        message = MIMEMultipart()
+        message['From'] = sender_address
+        message['To'] = receiver_address
+        message['Subject'] = 'A test mail sent by Python. It has an attachment.'   #The subject line
+        #The body and the attachments for the mail
+        message.attach(MIMEText(mail_content, 'plain'))
+        #Create SMTP session for sending the mail
+        session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
+        session.starttls() #enable security
+        session.login(sender_address, sender_pass) #login with mail_id and password
+        text = message.as_string()
+        session.sendmail(sender_address, receiver_address, text)
+        session.quit()
+        print('Mail Sent')
 
         # listelerimize ekliyoruz
         closes.append(close)
