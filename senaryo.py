@@ -3,6 +3,9 @@ import numpy as np
 import talib as ta
 import math
 from binance.client import Client
+from django.core.mail import send_mail
+
+
 
 SOCKET = "wss://stream.binance.com:9443/ws/dogeusdt@kline_1m"
 
@@ -32,6 +35,13 @@ lows = []
 
 def on_open(ws):
     print('opened connection')
+    send_mail(
+   'Mail başlığı',
+   'Mail içeriği',
+   'onerkerim1@yandex.com',
+   ['onerkerim@me.com'],
+   fail_silently=False,
+   )
 
 def on_close(ws):
     print('closed connection')

@@ -180,8 +180,8 @@ EMAIL_HOST = 'smtp.yandex.com'
 EMAIL_HOST_USER = 'onerkerim1@yandex.com'
 EMAIL_HOST_PASSWORD = '02120212oNER!?'
 EMAIL_PORT = 587
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-#EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+#EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
 
 
