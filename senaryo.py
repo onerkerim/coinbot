@@ -11,16 +11,32 @@ from email.mime.text import MIMEText
 
 
 
-#def send_emails(title,msg):
-#    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-#    server.ehlo()
-#    server.starttls()
-#    server.ehlo()
-#    server.login('pyhonmailgonder@gmail.com','02120212Oner')
-#    message = 'Subject: {}\n\n{}'.format(title,msg)
-#    server.sendmail('pyhonmailgonder@gmail.com','onerkerim@me.com',message)
-#    server.quit()
-#    print('E-mails successfully sent!')
+def send_emails(title,msg):
+    mail_content = msg
+    #The mail addresses and password
+    sender_address = 'pyhonmailgonder@gmail.com'
+    sender_pass = '02120212Oner'
+    receiver_address = 'onerkerim@me.com'
+    #Setup the MIME
+    message = MIMEMultipart()
+    message['From'] = sender_address
+    message['To'] = receiver_address
+    message['Subject'] = title
+    #The body and the attachments for the mail
+    message.attach(MIMEText(mail_content, 'plain'))
+    #Create SMTP session for sending the mail
+    session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
+    session.starttls() #enable security
+    session.login(sender_address, sender_pass) #login with mail_id and password
+    text = message.as_string()
+    session.sendmail(sender_address, receiver_address, text)
+    session.quit()
+    print('Mail Sent')
+
+
+
+
+
 
 
 
@@ -190,13 +206,13 @@ def on_message(ws, message):
 
             if color_change and trend_positive:
                 print('al sinyali', flush=True)
+                send_emails("Al sinyali test","python sizin için bir DOGE al sinyali üretti")
                 # buy_order = connection.client.order_market_buy(
                 #     symbol=PAIR,
                 #     quantity=BUY_QUANTITY)
-
-                
             elif color_change and not trend_positive:
                 print('sat sinyali', flush=True)
+                send_emails("Sat sinyali test","python sizin için bir DOGE sat sinyali üretti")
                 # sell_order = connection.client.order_market_sell(
                 #     symbol=PAIR,
                 #     quantity=BUY_QUANTITY)
