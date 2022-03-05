@@ -24,7 +24,7 @@ regex==2022.3.2
 requests==2.27.1
 six==1.16.0
 sqlparse==0.4.2
-TA-Lib==0.4.24
+
 tzdata==2021.5
 tzlocal==4.1
 ujson==5.1.0
