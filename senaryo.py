@@ -193,6 +193,9 @@ def on_message(ws, message):
             highs.append(high)
             lows.append(low)
 
+            send_emails(" Al sinyali test"," ### python sizin için bir DOGE al sinyali üretti "+now_str+" ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
+
+
             if len(closes) > 10:
                 print("10 kapanış oldu")
                 color_change, trend_positive = supertrendcheck(ATR_FACTOR, closes, highs, lows)
