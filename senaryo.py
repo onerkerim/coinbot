@@ -3,13 +3,25 @@ import numpy as np
 import talib as ta
 import math
 from binance.client import Client
-
+import datetime
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
+current_time = datetime.datetime.now()
 
+SOCKET = "wss://stream.binance.com:9443/ws/dogeusdt@kline_1m"
+
+PAIR = "DOGEUSDT"
+
+BUY_QUANTITY = 100.0
+
+ATR_FACTOR = 3
+
+closes = []
+highs = []
+lows = []
 
 def send_emails(title,msg):
     mail_content = msg
@@ -32,32 +44,6 @@ def send_emails(title,msg):
     session.sendmail(sender_address, receiver_address, text)
     session.quit()
     print('Mail Sent')
-
-
-
-
-
-
-
-
-
-
-
-
-
-SOCKET = "wss://stream.binance.com:9443/ws/dogeusdt@kline_1m"
-
-PAIR = "DOGEUSDT"
-
-BUY_QUANTITY = 100.0
-
-ATR_FACTOR = 3
-
-closes = []
-highs = []
-lows = []
-
-
 
 #class BinanceConnection:
 #    def __init__(self, file):
@@ -200,19 +186,23 @@ def on_message(ws, message):
         highs.append(high)
         lows.append(low)
 
+
+
+
         if len(closes) > 10:
             print("10 kapanış oldu")
             color_change, trend_positive = supertrendcheck(ATR_FACTOR, closes, highs, lows)
 
             if color_change and trend_positive:
                 print('al sinyali', flush=True)
-                send_emails("Al sinyali test","python sizin için bir DOGE al sinyali üretti")
+                send_emails("Al sinyali test","### python sizin için bir DOGE al sinyali üretti ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
+
                 # buy_order = connection.client.order_market_buy(
                 #     symbol=PAIR,
                 #     quantity=BUY_QUANTITY)
             elif color_change and not trend_positive:
                 print('sat sinyali', flush=True)
-                send_emails("Sat sinyali test","python sizin için bir DOGE sat sinyali üretti")
+                send_emails("Sat sinyali test","### python sizin için bir DOGE al sinyali üretti ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
                 # sell_order = connection.client.order_market_sell(
                 #     symbol=PAIR,
                 #     quantity=BUY_QUANTITY)
