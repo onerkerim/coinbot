@@ -172,65 +172,56 @@ def supertrendcheck(atr_factor, closes, highs, lows):
 def on_message(ws, message):
     global closes, highs, lows
 
-    json_message = json.loads(message)
-    pprint.pprint(json_message)
+    try:
+        json_message = json.loads(message)
+        pprint.pprint(json_message)
 
-    candle = json_message['k']
+        candle = json_message['k']
+        is_candle_closed = candle['x']
 
-    is_candle_closed = candle['x']
-    #print(now_turkey())
+        now = datetime.now()
+        now_str=now.strftime("%d/%m/%Y %H:%M:%S")
 
-    #turkey = timezone('Europe/Istanbul')
-    #now_turkey = aware_date.astimezone(turkey)
-    #utc_now = datetime.utcnow()
-    #utc = pytz.timezone('UTC')
-    #aware_date = utc.localize(utc_now)
-    now = datetime.now()
-    #dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        if is_candle_closed:
+            close = float(candle['c'])
+            high = float(candle['h'])
+            low = float(candle['l'])
+            print('close', close, 'high', high, 'low', low, 'kapanış sıra ', closes)
 
-    now_str=now.strftime("%d/%m/%Y %H:%M:%S")
+            # listelerimize ekliyoruz
+            closes.append(close)
+            highs.append(high)
+            lows.append(low)
 
+            if len(closes) > 10:
+                print("10 kapanış oldu")
+                color_change, trend_positive = supertrendcheck(ATR_FACTOR, closes, highs, lows)
 
+                if color_change and trend_positive:
+                    print('Al sinyali', flush=True)
+                    send_emails(" Al sinyali test"," ### python sizin için bir DOGE al sinyali üretti "+now_str+" ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
 
-    if is_candle_closed:
-        close = float(candle['c'])
-        high = float(candle['h'])
-        low = float(candle['l'])
-        print('close', close, 'high', high, 'low', low, 'kapanış sıra ', closes)
-
-
-
-        # listelerimize ekliyoruz
-        closes.append(close)
-        highs.append(high)
-        lows.append(low)
-
-
-
-
-        if len(closes) > 10:
-            print("10 kapanış oldu")
-            color_change, trend_positive = supertrendcheck(ATR_FACTOR, closes, highs, lows)
-
-            if color_change and trend_positive:
-                print('Al sinyali', flush=True)
-                send_emails(" Al sinyali test"," ### python sizin için bir DOGE al sinyali üretti "+now_str+" ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
-
-                # buy_order = connection.client.order_market_buy(
-                #     symbol=PAIR,
-                #     quantity=BUY_QUANTITY)
-            elif color_change and not trend_positive:
-                print('Sat sinyali', flush=True)
-                send_emails(" Sat sinyali test"," ### python sizin için bir DOGE sat sinyali üretti "+now_str+" ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
-                # sell_order = connection.client.order_market_sell(
-                #     symbol=PAIR,
-                #     quantity=BUY_QUANTITY)
+                    # buy_order = connection.client.order_market_buy(
+                    #     symbol=PAIR,
+                    #     quantity=BUY_QUANTITY)
+                elif color_change and not trend_positive:
+                    print('Sat sinyali', flush=True)
+                    send_emails(" Sat sinyali test"," ### python sizin için bir DOGE sat sinyali üretti "+now_str+" ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
+                    # sell_order = connection.client.order_market_sell(
+                    #     symbol=PAIR,
+                    #     quantity=BUY_QUANTITY)
+    except Exception as e:
+        print(e)
 
 
+try:
+
+    ws = websocket.WebSocketApp(SOCKET, on_open=on_open, on_close=on_close, on_message=on_message)
+    ws.run_forever()
 
 
-ws = websocket.WebSocketApp(SOCKET, on_open=on_open, on_close=on_close, on_message=on_message)
-ws.run_forever()
+except Exception as e:
+    print(e)
 
 
 
