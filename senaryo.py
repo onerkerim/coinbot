@@ -8,18 +8,11 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-import pytz
-from pytz import timezone
-from datetime import datetime
-utc_now = datetime.utcnow()
-utc = pytz.timezone('UTC')
-aware_date = utc.localize(utc_now)
+
+from datetime import date
 
 
-def now_turkey():
-    turkey = timezone('Europe/Istanbul')
-    now_turkey = aware_date.astimezone(turkey)
-    return now_turkey
+
 
 SOCKET = "wss://stream.binance.com:9443/ws/dogeusdt@kline_1m"
 
@@ -39,21 +32,24 @@ def send_emails(title,msg):
     sender_address = 'pyhonmailgonder@gmail.com'
     sender_pass = '02120212Oner'
     receiver_address = 'onerkerim@me.com'
-    #Setup the MIME
-    message = MIMEMultipart()
-    message['From'] = sender_address
-    message['To'] = receiver_address
-    message['Subject'] = title
-    #The body and the attachments for the mail
-    message.attach(MIMEText(mail_content, 'plain'))
-    #Create SMTP session for sending the mail
-    session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
-    session.starttls() #enable security
-    session.login(sender_address, sender_pass) #login with mail_id and password
-    text = message.as_string()
-    session.sendmail(sender_address, receiver_address, text)
-    session.quit()
-    print('Mail Sent')
+    try:
+        #Setup the MIME
+        message = MIMEMultipart()
+        message['From'] = sender_address
+        message['To'] = receiver_address
+        message['Subject'] = title
+        #The body and the attachments for the mail
+        message.attach(MIMEText(mail_content, 'plain'))
+        #Create SMTP session for sending the mail
+        session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
+        session.starttls() #enable security
+        session.login(sender_address, sender_pass) #login with mail_id and password
+        text = message.as_string()
+        session.sendmail(sender_address, receiver_address, text)
+        session.quit()
+        print('Mail Sent')
+    except Exception as e:
+        print(e)
 
 #class BinanceConnection:
 #    def __init__(self, file):
@@ -183,8 +179,19 @@ def on_message(ws, message):
 
     is_candle_closed = candle['x']
     #print(now_turkey())
-    now_tr=str(now_turkey())
+
+    #turkey = timezone('Europe/Istanbul')
+    #now_turkey = aware_date.astimezone(turkey)
+    #utc_now = datetime.utcnow()
+    #utc = pytz.timezone('UTC')
+    #aware_date = utc.localize(utc_now)
+    #now = date.now()
+    #dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+
     #print(now_tr)
+
+    #send_emails(" Al sinyali test"," ### python sizin için bir DOGE al sinyali üretti "+dt_string+" ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
+
 
     if is_candle_closed:
         close = float(candle['c'])
@@ -220,7 +227,7 @@ def on_message(ws, message):
                 #     symbol=PAIR,
                 #     quantity=BUY_QUANTITY)
 
-         
+
 
 
 ws = websocket.WebSocketApp(SOCKET, on_open=on_open, on_close=on_close, on_message=on_message)
