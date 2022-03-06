@@ -43,4 +43,4 @@ while True:
     print(now)
     send_emails("Background code run",now+" saatinden gönderildi")
 
-    time.sleep(180)
+    time.sleep(480)
