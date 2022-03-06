@@ -220,6 +220,10 @@ def on_message(ws, message):
                 #     symbol=PAIR,
                 #     quantity=BUY_QUANTITY)
 
+            closes = []
+            highs = []
+            lows = []   
+
 
 ws = websocket.WebSocketApp(SOCKET, on_open=on_open, on_close=on_close, on_message=on_message)
 ws.run_forever()
