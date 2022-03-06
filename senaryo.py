@@ -3,13 +3,23 @@ import numpy as np
 import talib as ta
 import math
 from binance.client import Client
-import datetime
+
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+import pytz
+from pytz import timezone
+from datetime import datetime
+utc_now = datetime.utcnow()
+utc = pytz.timezone('UTC')
+aware_date = utc.localize(utc_now)
 
-current_time = datetime.datetime.now()
+
+def now_turkey():
+    turkey = timezone('Europe/Istanbul')
+    now_turkey = aware_date.astimezone(turkey)
+    return now_turkey
 
 SOCKET = "wss://stream.binance.com:9443/ws/dogeusdt@kline_1m"
 
@@ -172,6 +182,9 @@ def on_message(ws, message):
     candle = json_message['k']
 
     is_candle_closed = candle['x']
+    #print(now_turkey())
+    now_tr=str(now_turkey())
+    #print(now_tr)
 
     if is_candle_closed:
         close = float(candle['c'])
@@ -194,15 +207,15 @@ def on_message(ws, message):
             color_change, trend_positive = supertrendcheck(ATR_FACTOR, closes, highs, lows)
 
             if color_change and trend_positive:
-                print('al sinyali', flush=True)
-                send_emails("Al sinyali test","### python sizin için bir DOGE al sinyali üretti ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
+                print('Al sinyali', flush=True)
+                send_emails(" Al sinyali test"," ### python sizin için bir DOGE al sinyali üretti "+now_tr+" ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
 
                 # buy_order = connection.client.order_market_buy(
                 #     symbol=PAIR,
                 #     quantity=BUY_QUANTITY)
             elif color_change and not trend_positive:
-                print('sat sinyali', flush=True)
-                send_emails("Sat sinyali test","### python sizin için bir DOGE al sinyali üretti ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
+                print('Sat sinyali', flush=True)
+                send_emails(" Sat sinyali test"," ### python sizin için bir DOGE sat sinyali üretti "+now_tr+" ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
                 # sell_order = connection.client.order_market_sell(
                 #     symbol=PAIR,
                 #     quantity=BUY_QUANTITY)
