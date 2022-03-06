@@ -9,7 +9,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-from datetime import date
+from datetime import datetime
 
 
 
@@ -185,12 +185,11 @@ def on_message(ws, message):
     #utc_now = datetime.utcnow()
     #utc = pytz.timezone('UTC')
     #aware_date = utc.localize(utc_now)
-    #now = date.now()
+    now = datetime.now()
     #dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 
-    #print(now_tr)
+    now_str=now.strftime("%d/%m/%Y %H:%M:%S")
 
-    #send_emails(" Al sinyali test"," ### python sizin için bir DOGE al sinyali üretti "+dt_string+" ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
 
 
     if is_candle_closed:
@@ -215,14 +214,14 @@ def on_message(ws, message):
 
             if color_change and trend_positive:
                 print('Al sinyali', flush=True)
-                send_emails(" Al sinyali test"," ### python sizin için bir DOGE al sinyali üretti "+now_tr+" ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
+                send_emails(" Al sinyali test"," ### python sizin için bir DOGE al sinyali üretti "+now_str+" ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
 
                 # buy_order = connection.client.order_market_buy(
                 #     symbol=PAIR,
                 #     quantity=BUY_QUANTITY)
             elif color_change and not trend_positive:
                 print('Sat sinyali', flush=True)
-                send_emails(" Sat sinyali test"," ### python sizin için bir DOGE sat sinyali üretti "+now_tr+" ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
+                send_emails(" Sat sinyali test"," ### python sizin için bir DOGE sat sinyali üretti "+now_str+" ### Closes: "+candle['c']+" ### Highs: "+candle['h']+" ### lows:" +candle['l'])
                 # sell_order = connection.client.order_market_sell(
                 #     symbol=PAIR,
                 #     quantity=BUY_QUANTITY)
