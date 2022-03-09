@@ -15,6 +15,7 @@ gunicorn==20.1.0
 idna==3.3
 multidict==6.0.2
 numpy==1.22.2
+pandas==1.4.1
 psycopg2-binary==2.9.3
 python-binance==1.0.15
 python-dateutil==2.8.2
@@ -24,6 +25,7 @@ regex==2022.3.2
 requests==2.27.1
 six==1.16.0
 sqlparse==0.4.2
+TA-Lib==0.4.24
 tzdata==2021.5
 tzlocal==4.1
 ujson==5.1.0

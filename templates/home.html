@@ -16,6 +16,29 @@
 
 
 
+
+<!--wallet coin list-->
+<div class="container" style="margin-top:100px;">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            {% for wallet_coin_list in wallet_coin_lists %}
+                <div class="col-md-3">
+                <b>{{ wallet_coin_list.asset }}</b> <br>
+                {{ wallet_coin_list.free }} <br>
+                </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--wallet coin list-->
+
+
 <div class="container" style="margin-top:100px;">
   <div class="row">
   <div class="col-sm-7">

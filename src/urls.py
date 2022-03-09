@@ -8,4 +8,5 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')), # new
     path('accounts/', include('django.contrib.auth.urls')),
     path('', views.ApiKeysInfoView.as_view(template_name="home.html"), name='home'),
+    path('hooks/', include('hooks.urls')),
 ]

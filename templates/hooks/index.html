@@ -1,0 +1,9 @@
+hook sayfası
+{{user_info}}
+{{client_api_key}}
+{{client_api_secret_key}}
+{% for post in api_key_lists %}
+<br>
+{{ post.user_id }} : {{ post.api_key }}<br>
+{{ post.api_secret_key }}<br><br><br>
+{% endfor %}
